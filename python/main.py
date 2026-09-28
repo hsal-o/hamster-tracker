@@ -16,6 +16,7 @@ WHEEL_ID = int(os.getenv("WHEEL_ID"))
 
 arduino = serial.Serial(
     "/dev/ttyACM0", # Linux device path for arduino
+    # "COM3",         # Windows
     9600,
     timeout=1
 )
@@ -35,6 +36,10 @@ while True:
             revolutions = int(revolutions)
             elapsed_ms = int(elapsed_ms)
             elapsed_seconds = elapsed_ms / 1000
+
+            if revolutions <= 1:
+                print(f"Ignoring session with only {revolutions} revolution(s)")
+                continue
     
             ended_at = datetime.now()
             started_at = ended_at - timedelta(milliseconds=elapsed_ms)
