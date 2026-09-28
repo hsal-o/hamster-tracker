@@ -1,7 +1,7 @@
 const int HALL_PIN = 2;
 const int LED_PIN = 11;
 
-const unsigned long SESSION_TIMEOUT = 60000; // 5000 for testing
+const unsigned long SESSION_TIMEOUT = 60000; // 5000 for testing, 60000 for prod
 
 int prev_hall_state = HIGH;
 unsigned long revolution_count = 0;
@@ -13,6 +13,8 @@ void setup()
 {
     pinMode(HALL_PIN, INPUT);
     pinMode(LED_PIN, OUTPUT);
+
+    digitalWrite(LED_PIN, LOW);
 
     Serial.begin(9600);
 }
@@ -33,6 +35,8 @@ void loop()
             session_start_time = cur_time;
             revolution_count = 0;
 
+            digitalWrite(LED_PIN, HIGH);
+
             Serial.println("Session started");
         }
 
@@ -41,16 +45,6 @@ void loop()
 
         Serial.print("Revolutions: ");
         Serial.println(revolution_count);
-    }
-
-    // LED
-    if (cur_hall_state == LOW)
-    {
-        digitalWrite(LED_PIN, HIGH);
-    }
-    else
-    {
-        digitalWrite(LED_PIN, LOW);
     }
 
     // Detect end of session
@@ -65,6 +59,8 @@ void loop()
 
         session_active = false;
         revolution_count = 0;
+
+        digitalWrite(LED_PIN, LOW);
     }
 
     prev_hall_state = cur_hall_state;
