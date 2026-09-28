@@ -10,7 +10,13 @@ Inside the python directory in this project, create the virtual environment:
 python -m venv .venv
 ```
 
-Activate it:
+### Activate Virtual Environment - PowerShell 
+
+```
+.\.venv\Scripts\Activate.ps1
+```
+
+### Activate Virtual Environment - Command Prompt
 
 ```
 .venv\Scripts\activate.bat
